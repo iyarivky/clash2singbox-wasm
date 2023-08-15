@@ -38,7 +38,66 @@ export const wasmBrowserInstantiate = async (wasmModuleUrl, importObject) => {
     go.run(wasmModule.instance);
   
     // Call the Add function export from wasm, save the result
-    const addResult = wasmModule.instance.exports.add(24, 24);
+    const configFile = `port: 7890
+    socks-port: 7891
+    redir-port: 7892
+    mixed-port: 7893
+    tproxy-port: 7895
+    ipv6: false
+    mode: rule
+    log-level: silent
+    allow-lan: true
+    external-controller: 0.0.0.0:9090
+    secret: ""
+    bind-address: "*"
+    unified-delay: true
+    profile:
+      store-selected: true
+    dns:
+      enable: true
+      ipv6: false
+      enhanced-mode: redir-host
+      listen: 0.0.0.0:7874
+      nameserver:
+        - 8.8.8.8
+        - 1.0.0.1
+        - https://dns.google/dns-query
+      fallback:
+        - 1.1.1.1
+        - 8.8.4.4
+        - https://cloudflare-dns.com/dns-query
+        - 112.215.203.254
+      default-nameserver:
+        - 8.8.8.8
+        - 1.1.1.1
+        - 112.215.203.254
+    proxies:
+      - name: RELAY-104.17.253.39-0991
+        server: cfcdn2.sanfencdn.net
+        port: 2052
+        type: vmess
+        uuid: 78d6fa88-0d27-414f-8f51-1e16186d588f
+        alterId: 0
+        cipher: auto
+        tls: false
+        skip-cert-verify: true
+        servername: us8.sanfencdn2.com
+        network: ws
+        ws-opts:
+          path: /
+          headers:
+            Host: us8.sanfencdn2.com
+        udp: true
+    proxy-groups:
+      - name: FASTSSH-SSHKIT-HOWDY
+        type: select
+        proxies:
+          - RELAY-104.17.253.39-0991
+          - DIRECT
+    rules:
+      - MATCH,FASTSSH-SSHKIT-HOWDY
+    `
+    const addResult = wasmModule.instance.exports.configClash(configFile);
   
     // Set the result onto the body
     document.body.textContent = `Hello World! addResult: ${addResult}`;
