@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"flag"
 	"fmt"
+	"syscall/js"
 
 	"github.com/xmdhs/clash2singbox/convert"
 	"github.com/xmdhs/clash2singbox/model/clash"
@@ -65,4 +66,22 @@ func configClash(config string) string {
 	return string(outb)
 }
 
-func main(){}
+func main() {
+    fmt.Println("Hello, WebAssembly!")
+    // Mount the function on the JavaScript global object.
+    js.Global().Set("configClash", js.FuncOf(func(this js.Value, args []js.Value) any {
+        if len(args) != 1 {
+            //fmt.Println("invalid number of args")
+            return "Invalid no of arguments passed"
+        }
+        input := args[0].String()
+        fmt.Printf("input %s\n", input)
+        return configClash(input)
+    }))
+
+    // Prevent the program from exiting.
+    // Note: the exported func should be released if you don't need it any more,
+    // and let the program exit after then. To simplify this demo, this is
+    // omitted. See https://pkg.go.dev/syscall/js#Func.Release for more information.
+    select {}
+}
