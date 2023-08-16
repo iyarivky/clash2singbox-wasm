@@ -43,7 +43,7 @@
           <textarea id="input" placeholder="Paste the clash YAML config here"></textarea>
           <br />
           <div class="tombol">
-            <button class="button" id="nya">Convert</button>
+            <button class="button" onclick="copyClipboard()">Convert</button>
             <br />
           </div>
         </div>
@@ -54,15 +54,26 @@
           </h4>
           <textarea id="output1"></textarea>
           <br />
+          <div class="tombol">
+            <button class="button" onclick="copyClipboard()">Copy</button>
+            <br />
+          </div>
         </div>
     <script>
-      document.getElementById('nya').addEventListener('click', () => {
+      function convert() {
         const inputElement = document.getElementById("input");
         const outputElement = document.getElementById("output1");
         const inputValue = inputElement.value;
         const result = configClash(inputValue);
         outputElement.value = result;
-      });
+      }
+      function copyClipboard() {
+        var copyText = document.getElementById("output1");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+        alert("Copied the text: " + copyText.value);
+      }
     </script>
     <footer>
       <div class="kaki">
