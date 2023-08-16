@@ -17,8 +17,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600&display=fallback&text=clash2singbox-wasm" rel="stylesheet" media="all" />
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=fallback&text=2ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz%20%2C.%2F" rel="stylesheet" media="all">
     <link rel="stylesheet" type="text/css" href="https://cdn.iyariv.workers.dev/styles.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.iyariv.workers.dev/js-snackbar.css" media="all" />
     <link rel="preload" href="main_wasm.wasm" as="fetch" crossorigin="">
     <script src="wasm_exec.js"></script>
+    <script src="https://cdn.iyariv.workers.dev/js-snackbar.js"></script>
     <script>
       const go = new Go();
       WebAssembly.instantiateStreaming(
@@ -54,6 +56,10 @@
           </h4>
           <textarea id="output1"></textarea>
           <br />
+          <div class="tombol">
+            <button class="button" onclick="downloadConfig('output1')">Download</button>
+            <button class="button" onclick="pasteConfig('output1')"> Copy to Clipboard </button>
+          </div>
         </div>
     <script>
       document.getElementById('nya').addEventListener('click', () => {
@@ -63,6 +69,34 @@
         const result = configClash(inputValue);
         outputElement.value = result;
       });
+      function pasteConfig(outputId) {
+        let def = SnackBar({
+          message: "Successfully copied to clipboard.",
+          position: "bc",
+          fixed: true,
+          status: "success"
+        });
+        var copyText = document.getElementById(outputId);
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText.value);
+      }
+      function downloadConfig(outputId){
+        let outputText = document.getElementById(outputId).value;
+        let blob = new Blob([outputText], {type: "text/plain;charset=utf-8"});
+        let date = new Date();
+        let dateString = date.toLocaleDateString('id-ID').replace(/\//g, '-');
+        let timeString = date.toLocaleTimeString('id-ID');
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = `configSingBox-${dateString}-${timeString}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
     </script>
     <footer>
       <div class="kaki">

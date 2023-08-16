@@ -1,7 +1,13 @@
 # clash2singbox-wasm
-Coming-soon
+Stupid attempt to convert clash2singbox go binary to WebAssembly binary
 
-## 支持协议
+## Usage
+- Go to https://c2s.deno.dev
+- Input your Clash YAML config
+- Press "Convert" button
+- Done
+
+## Support
 - shadowsocks （仅包含 v2ray-plugin, obfs 和 shadow-tls 插件）
 - shadowsocksR
 - vmess
@@ -11,5 +17,5 @@ Coming-soon
 - http
 - hysteria
 
-## 网页版本
-https://github.com/xmdhs/clash2sfa
+## Credits
+[xmdhs](https://github.com/xmdhs/)
