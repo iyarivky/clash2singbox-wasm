@@ -58,7 +58,7 @@
           <br />
           <div class="tombol">
             <button class="button" onclick="downloadConfig('output1')">Download</button>
-            <button class="button" onclick="pasteConfig('output1')"> Copy to Clipboard </button>
+            <button class="button" onclick="copyConfig('output1')"> Copy to Clipboard </button>
           </div>
         </div>
       </div>
@@ -71,7 +71,7 @@
         const result = configClash(inputValue);
         outputElement.value = result;
       });
-      function pasteConfig(outputId) {
+      function copyConfig(outputId) {
         let def = SnackBar({
           message: "Successfully copied to clipboard.",
           position: "bc",
