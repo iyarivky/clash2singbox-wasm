@@ -2,7 +2,7 @@
 Stupid attempt to convert clash2singbox go binary to WebAssembly binary
 
 ## Usage
-- Go to https://c2s.deno.dev
+- Go to https://clash2sing.deno.dev/
 - Input your Clash YAML config
 - Press "Convert" button
 - Done
